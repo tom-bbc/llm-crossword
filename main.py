@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from openai import AzureOpenAI
+from openai import OpenAI
 from src.crossword.utils import load_puzzle
 
 # Load environment variables from .env file
@@ -46,13 +46,12 @@ print(puzzle)
 
 print('--- OpenAI Hello World ---')
 def openai_hello_world():
-    client = AzureOpenAI(
-        api_version=os.getenv("OPENAI_API_VERSION"),
-        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-        api_key=os.getenv("AZURE_OPENAI_API_KEY")
+    client = OpenAI(
+        api_key=os.getenv("OPENAI_API_KEY"),
+        base_url=os.getenv("OPENAI_BASE_URL"),
     )
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model=os.getenv("OPENAI_MODEL_NAME"),
         messages=[{"role": "system", "content": "You are a helpful assistant."}, 
                   {"role": "user", "content": "Hello!"}]
     )
